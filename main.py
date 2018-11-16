@@ -3,8 +3,8 @@ import draw
 import processBoard as boardProcessor
 import processImg as imgProcessor
 
-photoName = ("kai")
-tileSize =  6
+photoName = ("vas")
+tileSize =  8
 setShapes = True
 setShapeColors = False
 setLines = False #Color
@@ -13,11 +13,13 @@ setDots = False
 setDotColors = False
 
 fancyColor = False
-greyShades = 16
+greyShades = 14
 diagRestrict = False
 
 thresholding = False
-threshNum = 1
+threshNum = 2
+
+smallestSquareSize = 200  #max 127.5
 
 
 lineWidth = (tileSize/8)
@@ -26,7 +28,7 @@ dotRadius = round((tileSize/6),2)
 def main():
     grid = board.Grid()
     fileExt = "DotBoi.eps"
-    bprocessor = boardProcessor.Process(tileSize, thresholding, threshNum)
+    bprocessor = boardProcessor.Process(tileSize, thresholding, threshNum, smallestSquareSize)
     iprocessor = imgProcessor.Process(tileSize)
     drawer = draw.Drawer(tileSize, setShapeColors, setLines, lineWidth, setDotColors, setDots, \
                          dotRadius, setLineColors, setShapes, fancyColor, greyShades, diagRestrict)

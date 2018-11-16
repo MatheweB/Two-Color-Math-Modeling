@@ -2,7 +2,7 @@ tileSize = None #defines the square size of a given tile
 import math
 
 class Square:
-    def __init__(self, c, avgColor, x, y, gridx, gridy, tSize, threshListy):
+    def __init__(self, c, avgColor, x, y, gridx, gridy, tSize, threshListy, mLimit):
 
         global tileSize
         tileSize = tSize
@@ -56,9 +56,7 @@ class Square:
 
         self.threshList = threshListy
 
-    def setThreshList(self, listy):
-        self.threshList = listy
-        
+        self.magnitudeLimint = mLimit
 
     def getBestThresh(self, colorNum):
 
@@ -80,7 +78,6 @@ class Square:
         else:
             return "w2"
         
-        
     def setColors(self):
             
         if self.W == None:
@@ -101,33 +98,22 @@ class Square:
         quadrantX = tileSize/2
         quadrantY = tileSize/2
 
-        #hypoteneuse = math.sqrt(quadrantX**2 + quadrantY**2)
-
-        #scaleSize = hypoteneuse/255
-
-        #scaledHypLenX = self.moveDirection[1][0] * scaleSize
-        #scaledHypLenY = self.moveDirection[1][1] * scaleSize
-
         scaledHypLenX = self.moveDirection[2]
         scaledHypLenY = self.moveDirection[3]
 
-        if scaledHypLenX < 15:
-            scaledHypLenX = 15
-        if scaledHypLenY < 15:
-            scaledHypLenY  = 15
-
-        if scaledHypLenX > 170:
-            scaledHypLenX = 170
-        if scaledHypLenY > 170:
-            scaledHypLenY  = 170
+        if scaledHypLenX < 255/2: 
+            scaledHypLenX = 255 - scaledHypLenX
+            
+        if scaledHypLenY < 255/2:
+            scaledHypLenY = 255 - scaledHypLenY
+           
+        if scaledHypLenX > self.magnitudeLimint:
+            scaledHypLenX = self.magnitudeLimint
+        if scaledHypLenY > self.magnitudeLimint:
+            scaledHypLenY  = self.magnitudeLimint
             
         xAdd = scaledHypLenX*((tileSize/2)/255)
         yAdd = scaledHypLenY*((tileSize/2)/255)
-
-        
-        #xAdd = math.sqrt(scaledHypLen) / math.sqrt(2)
-        #yAdd = math.sqrt(scaledHypLen) / math.sqrt(2)
-
 
         if self.moveDirection[0] == "NE":
             yMult = -1
@@ -145,9 +131,7 @@ class Square:
             yMult = -1
             xMult = -1
 
-        #newX = 
-
-        self.newVertexPos = [round(self.dotX + (xMult*xAdd),3), round(self.dotY + (yMult*yAdd),3)] #[newX,newY]
+        self.newVertexPos = [round(self.dotX + (xMult*xAdd),3), round(self.dotY + (yMult*yAdd),3)]
         
 
     def setDiags(self):

@@ -1,18 +1,20 @@
 import square
-
 tileSize = None
 thresholding = None
 threshNum = None
+magnitudeNum = None
 
 class Process:
 
-    def __init__(self, tiSize, tHold, tNum):
+    def __init__(self, tiSize, tHold, tNum, mNum):
         global tileSize
         global thresholding
         global threshNum
+        global magnitudeNum
         tileSize = tiSize
         thresholding = tHold
         threshNum = tNum
+        magnitudeNum = mNum
         
     def makeSquares(self, grid):
 
@@ -37,7 +39,8 @@ class Process:
                         squareNum += grid.photo[y*tileSize + a][x*tileSize + b]
 
                 totalSquares += 1
-                newSquare = square.Square((totalSquares%2)+addNum, int(squareNum//(tileSize*tileSize)), x*tileSize, y*tileSize, x, y, tileSize, threshListy)
+                newSquare = square.Square((totalSquares%2)+addNum, int(squareNum//(tileSize*tileSize)), \
+                                          x*tileSize, y*tileSize, x, y, tileSize, threshListy, magnitudeNum)
                 grid.squares[y].append(newSquare)
                 grid.pixelPhoto[y].append(int(squareNum//(tileSize*tileSize)))
                 squareNum = 0
